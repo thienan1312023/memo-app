@@ -4,20 +4,16 @@ import { connect } from 'react-redux';
 import MainBody from '../components/mainBody';
 import { userActions } from '../actions';
 
-const listProps = {
-    onScroll: handleScroll,
-    todos: filteredTodos,
-    toggleTodoStatus,
-    deleteTodo,
-}
+
+
 
 const toolbarProps = {
-    statusFilter,
-    todos,
-    onStatusFilterChange: handleStatusFilterChange,
-    scrolled,
-    onCompleteAll: handleCompleteAll,
-    onDeleteAll: handleDeleteAll,
+    // statusFilter,
+    // todos,
+    // onStatusFilterChange: handleStatusFilterChange,
+    //scrolled,
+    // onCompleteAll: handleCompleteAll,
+    // onDeleteAll: handleDeleteAll,
   }
 class HomePage extends React.Component {
     componentDidMount() {
@@ -30,11 +26,12 @@ class HomePage extends React.Component {
 
     render() {
         const { user, users } = this.props;
+   
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h1>Hi {user.username}!</h1>
                 <p>You're logged in with React!!</p>
-                <MyDayBody listProps={listProps} toolbarProps={toolbarProps} />
+                <MainBody/>
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>
