@@ -24,7 +24,8 @@
     "react-transition-group": "^4.2.2",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "axios": "^0.18.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

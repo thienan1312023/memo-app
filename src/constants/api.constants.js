@@ -1,0 +1,1 @@
+export const API_BASE = 'https://memo-app-2195.herokuapp.com/memos/';

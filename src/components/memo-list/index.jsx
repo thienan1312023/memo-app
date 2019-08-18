@@ -7,7 +7,7 @@ const MemoList = ( {memos}) => {
     <div>
         {
           memos.length > 0 && memos.map(memo => (
-          <div key={memo.key} timeout={300} classNames="item">
+          <div key={memo._id} timeout={300}>
             <Memo
               memo={memo}
               // onUpdate={updateMemo}
