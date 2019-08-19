@@ -7,7 +7,6 @@ export const memoActions = {
 
 function chooseMemo(id, title, content, color) {
     const memo = new Memo(id, title, content, color);
-    console.log(memo);
     return { type: memoConstants.CHOOSE_MEMO, payload: memo };
 }
 

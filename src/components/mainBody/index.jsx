@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MemoList from '../memo-list'
+import {MemoDetail} from '../memo-detail'
 import { API_BASE } from '../../constants/api.constants';
 export default class MainBody extends React.Component {
   constructor(props) {
@@ -34,8 +35,9 @@ export default class MainBody extends React.Component {
   render() {
     const { data } = this.state;
     return data && (
-      <div>
+      <div className="d-flex">
         <MemoList memos={data} />
+        <MemoDetail></MemoDetail>
       </div>
     );
   }

@@ -2,29 +2,83 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { memoActions } from '../../actions/memo.actions';
-const MemoDetail = props => {
-    debugger;
-    const { memo, fetchMemos } = props;
-    return (
-        <div>
-            <h2>memo.title</h2>
-            <div>memo.content</div>
-        </div>
-    )
+import { API_BASE } from '../../constants/api.constants';
+import axios from 'axios'
+class MemoDetail extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            memo: {
+                id:'',
+                title: '',
+                content: '',
+                color: ''
+            }
+        }
+    }
+    handleSubmit = () => {
+        event.preventDefault();
+        const { memo } = this.state;
+        const url = API_BASE;
+        axios.put(`${url}${memo.id}/update`, { ...memo })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+
+    }
+
+    handleChange = (event) => {
+        const { name, value } = event.target;
+        const { memo } = this.state;
+        this.setState({
+            memo: {
+                ...memo,
+                [name]: value
+            }
+        });
+    }
+    componentDidMount() {
+
+    }
+    componentWillReceiveProps(nextProps) {
+        const { memoSelected } = nextProps;
+        if (nextProps !== this.props) {
+            this.setState({
+                memo: {
+                    id : memoSelected.id,
+                    title: memoSelected.title,
+                    content: memoSelected.content,
+                    color: memoSelected.color
+                }
+
+            });
+            return true;
+        }
+        return true;
+
+    }
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text" name="title" value={this.state.memo.title || ''} onChange={this.handleChange} />
+                    <input type="text" name="content" value={this.state.memo.content || ''} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        )
+    }
 
 }
 
-Memo.propTypes = {
-    memo: PropTypes.shape({
-        id: PropTypes.string,
-        title: PropTypes.string,
-        content: PropTypes.string
-    }).isRequired,
-}
 
 function mapState(state) {
-    const memo = state.memo;
-    return memo;
+    const memoSelected = state.memo.memoSelected;
+    return { memoSelected };
 }
 
 const actionCreators = {

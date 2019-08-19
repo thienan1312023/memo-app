@@ -28,7 +28,7 @@ class HomePage extends React.Component {
         const { user, users } = this.props;
    
         return (
-            <div className="col-md-6 col-md-offset-3">
+            <div>
                 <h1>Hi {user.username}!</h1>
                 <p>You're logged in with React!!</p>
                 <MainBody/>

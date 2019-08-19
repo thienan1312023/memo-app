@@ -6,7 +6,8 @@ import { memoActions } from '../../actions/memo.actions';
 const Memo = props => {
   const {memo, chooseMemo} = props;
   const handleSelect = () => {
-      chooseMemo(memo.id, memo.title, memo.content, memo.color);
+      const memoColor = memo.color || '';
+      chooseMemo(memo._id, memo.title, memo.content, memoColor);
   }
   return (
     <Card bg={memo.color} style={{ width: '18rem' }} onClick={handleSelect}>
