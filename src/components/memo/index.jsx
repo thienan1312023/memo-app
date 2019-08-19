@@ -2,16 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { memoActions } from '../actions';
-const Memo = ({ memo }) => {
-  // const handleDelete = () => {
-  //     onDelete(memo.id);
-  // }
-
+import { memoActions } from '../../actions/memo.actions';
+const Memo = props => {
+  const {memo, chooseMemo} = props;
   const handleSelect = () => {
-      onUpdate(memo.id, memo.title, memo.content);
+      chooseMemo(memo.id, memo.title, memo.content, memo.color);
   }
-  console.log({ memo });
   return (
     <Card bg={memo.color} style={{ width: '18rem' }} onClick={handleSelect}>
       <Card.Body>
@@ -34,10 +30,13 @@ Memo.propTypes = {
 }
 
 function mapState(state){
-  const { chooseMemo } = state.
+  const memo = state.memo;
+  return memo;
 }
 
 const actionCreators = {
-  
+   chooseMemo: memoActions.chooseMemo
 }
-export default Memo
+
+const connectedMemo = connect(mapState, actionCreators)(Memo);
+export { connectedMemo as Memo };

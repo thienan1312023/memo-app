@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Memo from '../memo';
+import {Memo} from '../memo';
 
 const MemoList = ( {memos}) => {
   return (
