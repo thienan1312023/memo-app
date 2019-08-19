@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import MainBody from '../components/mainBody';
+import {MainBody} from '../components/mainBody';
 import { userActions } from '../actions';
 
 

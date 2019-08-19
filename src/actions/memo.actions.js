@@ -10,6 +10,6 @@ function chooseMemo(id, title, content, color) {
     return { type: memoConstants.CHOOSE_MEMO, payload: memo };
 }
 
-function fetchMemos(){
-    return {type: memoConstants.FETCH_MEMOS};    
+function fetchMemos(isReLoadData){
+    return {type: memoConstants.FETCH_MEMOS, payload: isReLoadData};    
 }

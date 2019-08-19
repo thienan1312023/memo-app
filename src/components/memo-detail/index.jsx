@@ -23,11 +23,11 @@ class MemoDetail extends React.Component {
         axios.put(`${url}${memo.id}/update`, { ...memo })
             .then(res => {
                 console.log(res);
-                console.log(res.data);
+                this.props.fetchMemos(true);
         }).catch((error) => {
             console.log(error);
         });
-
+        
     }
 
     handleChange = (event) => {

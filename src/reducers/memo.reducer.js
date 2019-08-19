@@ -1,7 +1,8 @@
 import { memoConstants } from '../constants';
 
 const initialStates = {
-  memoSelected: {}
+  memoSelected: {},
+  isReLoadData: false
 };
 export default function (state = initialStates, action) {
   switch (action.type) {
@@ -12,7 +13,8 @@ export default function (state = initialStates, action) {
       };
     case memoConstants.FETCH_MEMOS:
       return {
-        ...state
+        ...state, 
+        isReLoadData: action.payload
       }
     default:
       return state;
