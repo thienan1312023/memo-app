@@ -1,7 +1,9 @@
-import React, {Fragment, useState} from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { API_BASE } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 import { ConfirmDialog } from '../confirm-dialog';
 const Memo = props => {
@@ -18,6 +20,13 @@ const Memo = props => {
 
   const handleApproveRemove = () => {
     setShowConfirmDialog(false);
+    axios.delete(`${API_BASE}${memo._id}/delete`, { ...memo })
+      .then(res => {
+        console.log(res);
+        props.fetchMemos(true);
+      }).catch((error) => {
+        console.log(error);
+      });
   }
 
   const handleCancelRemove = () => {
@@ -32,15 +41,15 @@ const Memo = props => {
             {memo.content}
           </Card.Text>
         </Card.Body>
-        
+
       </div>
       <i className="fa fa-trash" aria-hidden="true" key="removeMemo" onClick={() => handleShowConfirmDialog()}></i>
-      <ConfirmDialog title="Confirm Dialog" 
-                     description="Are you want to delete this memo?"
-                     isShow={isShowConfirmDialog}
-                     handleApprove={handleApproveRemove}
-                     handleClose={handleCancelRemove}
-                     >
+      <ConfirmDialog title="Confirm Dialog"
+        description="Are you want to delete this memo?"
+        isShow={isShowConfirmDialog}
+        handleApprove={handleApproveRemove}
+        handleClose={handleCancelRemove}
+      >
       </ConfirmDialog>
     </Fragment>
   )
@@ -61,7 +70,8 @@ function mapState(state) {
 }
 
 const actionCreators = {
-  chooseMemo: memoActions.chooseMemo
+  chooseMemo: memoActions.chooseMemo,
+  fetchMemos: memoActions.fetchMemos
 }
 
 const connectedMemo = connect(mapState, actionCreators)(Memo);

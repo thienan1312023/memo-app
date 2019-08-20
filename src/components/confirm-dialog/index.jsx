@@ -17,11 +17,11 @@ export const ConfirmDialog = (props) => {
                 {description}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={handleApprove}>
                     Ok
                 </Button>
 
-                <Button variant="primary" onClick={handleApprove}>
+                <Button variant="primary" onClick={handleClose}>
                     Cancel
                 </Button>
             </Modal.Footer>
