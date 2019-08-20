@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { API_BASE } from '../../constants/api.constants';
+import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 import { ConfirmDialog } from '../confirm-dialog';
 const Memo = props => {
@@ -20,7 +20,7 @@ const Memo = props => {
 
   const handleApproveRemove = () => {
     setShowConfirmDialog(false);
-    axios.delete(`${API_BASE}${memo._id}/delete`, { ...memo })
+    axios.delete(`${API_BASE_MEMO}${memo._id}/delete`, { ...memo })
       .then(res => {
         console.log(res);
         props.fetchMemos(true);

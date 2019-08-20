@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux'
 import MemoList from '../memo-list'
 import { MemoDetail } from '../memo-detail'
-import { API_BASE } from '../../constants/api.constants';
+import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 class MainBody extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class MainBody extends React.Component {
 
 
 fetchMemos = () => {
-  const url = API_BASE;
+  const url = API_BASE_MEMO;
   axios({
     url: url,
     method: 'GET'
