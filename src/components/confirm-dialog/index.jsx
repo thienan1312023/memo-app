@@ -1,7 +1,12 @@
+import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-
+import PropTypes from 'prop-types';
 export const ConfirmDialog = (props) => {
-    const { title, description, onCancel, onAgree } = props;
+    const { title, description, isShow, handleClose, handleApprove } = props;
+    const [show, setShow] = useState(false);
+    useEffect(() => {
+        isShow ? setShow(true) : setShow(false);
+    });
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -12,11 +17,11 @@ export const ConfirmDialog = (props) => {
                 {description}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onCancel}>
+                <Button variant="secondary" onClick={handleClose}>
                     Ok
                 </Button>
 
-                <Button variant="primary" onClick={onAgree}>
+                <Button variant="primary" onClick={handleApprove}>
                     Cancel
                 </Button>
             </Modal.Footer>
@@ -27,6 +32,6 @@ export const ConfirmDialog = (props) => {
 ConfirmDialog.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    onCancel: PropTypes.func.isRequired,
-    onAgree: PropTypes.func.isRequired,
+    isShow: PropTypes.bool
 };
+

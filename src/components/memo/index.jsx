@@ -1,4 +1,4 @@
-import { React, Fragment } from 'react'
+import React, {Fragment, useState} from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
@@ -6,16 +6,22 @@ import { memoActions } from '../../actions/memo.actions';
 import { ConfirmDialog } from '../confirm-dialog';
 const Memo = props => {
   const { memo, chooseMemo } = props;
+  const [isShowConfirmDialog, setShowConfirmDialog] = useState(false);
   const handleSelect = () => {
     const memoColor = memo.color || '';
     chooseMemo(memo._id, memo.title, memo.content, memoColor);
   }
 
-  const handleRemoveMemo = (id) => {
+  const handleShowConfirmDialog = () => {
+    setShowConfirmDialog(true);
   }
 
-  const handleCloseModel = () => {
-    
+  const handleApproveRemove = () => {
+    setShowConfirmDialog(false);
+  }
+
+  const handleCancelRemove = () => {
+    setShowConfirmDialog(false);
   }
   return (
     <Fragment>
@@ -26,14 +32,15 @@ const Memo = props => {
             {memo.content}
           </Card.Text>
         </Card.Body>
-        <i class="fa fa-trash" aria-hidden="true" onClick={handleRemoveMemo(memo._id)}></i>
+        
       </div>
+      <i className="fa fa-trash" aria-hidden="true" key="removeMemo" onClick={() => handleShowConfirmDialog()}></i>
       <ConfirmDialog title="Confirm Dialog" 
                      description="Are you want to delete this memo?"
-                     onAgree={handleRemoveMemo(memo._id)}
-                     onCancel={handleCloseModal}
+                     isShow={isShowConfirmDialog}
+                     handleApprove={handleApproveRemove}
+                     handleClose={handleCancelRemove}
                      >
-
       </ConfirmDialog>
     </Fragment>
   )
