@@ -9,7 +9,7 @@ class LoginPage extends React.Component {
         this.props.logout();
 
         this.state = {
-            username: '',
+            userName: '',
             password: '',
             submitted: false
         };
@@ -27,24 +27,24 @@ class LoginPage extends React.Component {
         e.preventDefault();
 
         this.setState({ submitted: true });
-        const { username, password } = this.state;
-        if (username && password) {
-            this.props.login(username, password);
+        const { userName, password } = this.state;
+        if (userName && password) {
+            this.props.login(userName, password);
         }
     }
 
     render() {
         const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
+        const { userName, password, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
-                            <div className="help-block">Username is required</div>
+                    <div className={'form-group' + (submitted && !userName ? ' has-error' : '')}>
+                        <label htmlFor="userName">userName</label>
+                        <input type="text" className="form-control" name="userName" value={userName} onChange={this.handleChange} />
+                        {submitted && !userName &&
+                            <div className="help-block">userName is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>

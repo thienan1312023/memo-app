@@ -16,20 +16,16 @@ const toolbarProps = {
     // onDeleteAll: handleDeleteAll,
   }
 class HomePage extends React.Component {
-    componentDidMount() {
-        this.props.getUsers();
-    }
-
     handleDeleteUser(id) {
         return (e) => this.props.deleteUser(id);
     }
 
     render() {
-        const { user, users } = this.props;
+        const { user } = this.props;
    
         return (
             <div>
-                <h1>Hi {user.username}!</h1>
+                <h1>Hi {user.userName}!</h1>
                 <p>You're logged in with React!!</p>
                 <MainBody/>
                 <p>

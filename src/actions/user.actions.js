@@ -6,18 +6,18 @@ import { history } from '../helpers';
 export const userActions = {
     login,
     logout,
-    register,
-    getAll,
-    delete: _delete
+    register
 };
 
-function login(username, password) {
+function login(userName, password) {
     return dispatch => {
-        dispatch(request({ username }));
+        dispatch(request({ userName }));
 
-        userService.login(username, password)
+        userService.login(userName, password)
             .then(
-                user => { 
+                res => { 
+                    let user = parseJwt(res.data.token)
+                    localStorage.setItem('user', JSON.stringify(user));
                     dispatch(success(user));
                     history.push('/');
                 },
@@ -61,35 +61,8 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-function getAll() {
-    return dispatch => {
-        dispatch(request());
-
-        userService.getAll()
-            .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error.toString()))
-            );
-    };
-
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
-}
-
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-    return dispatch => {
-        dispatch(request(id));
-
-        userService.delete(id)
-            .then(
-                user => dispatch(success(id)),
-                error => dispatch(failure(id, error.toString()))
-            );
-    };
-
-    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
-    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
-}
+function parseJwt (token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+};
