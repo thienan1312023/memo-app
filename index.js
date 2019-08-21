@@ -1,5 +1,5 @@
 const express = require('express');
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 80;
 //const { mongoose } = require('./db.js');
 
 const app = express();
