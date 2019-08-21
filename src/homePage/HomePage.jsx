@@ -9,7 +9,7 @@ const RootHomepage = styled.div`
     min-width: 300px;
     width: 100%;
     .RootHomepage__header{
-        height: 15vh;
+        height: 120px;
         display: flex;
         justify-content: space-between;
         padding: 20px;
@@ -21,7 +21,7 @@ const RootHomepage = styled.div`
         }
     }
     .RootHomepage__body{
-        height: 85vh;
+        height: calc(100vh - 120px);
     }
 `;
 class HomePage extends React.Component {

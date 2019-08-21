@@ -20,6 +20,13 @@ const MemoStyle = styled.div`
       display: flex;
       justify-content: space-between
       padding: 0 25px 10px 20px;
+      i.fa-trash{
+        :hover{
+          color: red
+        }
+        color: #f87249;
+      }
+
     }
 `
 const Memo = props => {

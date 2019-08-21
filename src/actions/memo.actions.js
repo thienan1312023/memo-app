@@ -2,7 +2,8 @@ import { memoConstants } from '../constants/memo.constants';
 import Memo from '../models/memo.model';
 export const memoActions = {
     chooseMemo,
-    fetchMemos
+    fetchMemos,
+    createMemo
 };
 
 function chooseMemo(id, title, content, color) {
@@ -12,4 +13,8 @@ function chooseMemo(id, title, content, color) {
 
 function fetchMemos(isReLoadData){
     return {type: memoConstants.FETCH_MEMOS, payload: isReLoadData};    
+}
+
+function createMemo(){
+    return {type: memoConstants.CREATE_MEMO}
 }

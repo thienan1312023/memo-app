@@ -7,17 +7,40 @@ import { MemoDetail } from '../memo-detail'
 import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 
+const MainBodyStyle = styled.div`
+  @media (max-width: 768px) {
+      display: flex
+      flex-direction: column
+  }
+  .main-body__title-list-item{
+    height: 44px
+    textTransform: uppercase
+    padding-left: 20px
+    align-items: center
+    font-family: cursive
+    display: flex;
+    padding-right: 40px;
+    justify-content: space-between
+      .title{
+        font-size: 21px
+        color: brown
+      }
+      .fa-plus-square{
+        color: #1ebf1e;
+        font-size: 35px;
+        :hover{
+          color: #209c20;
+        }
+      }
+  }
+`;
+
 const overflowMemo = {
   backgroundColor: 'white'
 }
 
 const titleListMemo = {
-  height: '44px',
-  textTransform: 'uppercase',
-  paddingLeft: '20px',
-  paddingTop: '10px',
-  fontFamily: 'cursive',
-  color: 'brown'
+
 }
 class MainBody extends React.Component {
   constructor(props) {
@@ -62,13 +85,16 @@ class MainBody extends React.Component {
   render() {
     const { data } = this.state;
     return data && (
-      <div className="d-flex row" style={overflowMemo}>
-        <div className="col-md-8 col-xs-12 pr-0"><MemoDetail></MemoDetail> </div>
-        <div className="col-md-4 col-xs-12 p-0">
-             <div style={titleListMemo}>All memos ({data.length})</div>
+      <MainBodyStyle className="row" style={overflowMemo}>
+        <div className="col-lg-8 col-12 pr-0"><MemoDetail></MemoDetail> </div>
+        <div className="col-lg-4 col-12 p-0">
+            <div className = "main-body__title-list-item">
+               <span className="title"> All memos ({data.length}) </span>
+               <i className="fa fa-plus-square" aria-hidden="true"></i>
+            </div>
              <MemoList memos={data} />
         </div>
-      </div>
+      </MainBodyStyle>
     );
   }
 }
