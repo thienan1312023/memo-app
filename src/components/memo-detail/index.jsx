@@ -1,9 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
+import axios from 'axios'
+import styled from 'styled-components';
 import { memoActions } from '../../actions/memo.actions';
 import { API_BASE } from '../../constants/api.constants';
-import axios from 'axios'
+
+const MemoStyle = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 99%;
+    .memo__title{
+        line-height: 130%;
+        padding: 10px;
+    }
+    .memo__content{
+        height: 71vh;
+    }
+`;
 class MemoDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -63,11 +77,20 @@ class MemoDetail extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" name="title" value={this.state.memo.title || ''} onChange={this.handleChange} />
-                    <input type="text" name="content" value={this.state.memo.content || ''} onChange={this.handleChange} />
-                </label>
+                <MemoStyle>
+                <input  className="memo__title"
+                        type="text" 
+                        name="title" 
+                        placeholder="Title"
+                        value={this.state.memo.title || ''} 
+                        onChange={this.handleChange} />
+                <textarea className ="memo__content"
+                        type="text" 
+                        name="content" 
+                        value={this.state.memo.content || ''} 
+                        placeholder="Write your memo ... "
+                        onChange={this.handleChange} />
+                </MemoStyle>
                 <input type="submit" value="Submit" />
             </form>
         )

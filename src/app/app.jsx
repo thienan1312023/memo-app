@@ -1,13 +1,17 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import styled from 'styled-components';
 import { history } from '../helpers';
 import { alertActions } from '../actions';
 import { PrivateRoute } from '../components';
 import { HomePage } from '../homePage';
 import { LoginPage } from '../loginPage';
 import { RegisterPage } from '../registerPage';
+
+const RootApp = styled.div`
+  width: 100%
+`;
 
 class App extends React.Component {
     constructor(props) {
@@ -22,22 +26,18 @@ class App extends React.Component {
     render() {
         const { alert } = this.props;
         return (
-            <div>
-                <div className="container">
-                    <div>
-                        {alert.message &&
-                            <div className={`alert ${alert.type}`}>{alert.message}</div>
-                        }
-                        <Router history={history}>
-                            <div>
-                                <PrivateRoute exact path="/" component={HomePage} />
-                                <Route path="/login" component={LoginPage} />
-                                <Route path="/register" component={RegisterPage} />
-                            </div>
-                        </Router>
-                    </div>
-                </div>
-            </div>
+            <RootApp>
+                    {alert.message &&
+                        <div className={`alert ${alert.type}`}>{alert.message}</div>
+                    }
+                    <Router history={history}>
+                        <div className="container__route d-flex justify-content-center">
+                            <PrivateRoute exact path="/" component={HomePage} />
+                            <Route path="/login" component={LoginPage} />
+                            <Route path="/register" component={RegisterPage} />
+                        </div>
+                    </Router>
+            </RootApp>
         );
     }
 }

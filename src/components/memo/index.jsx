@@ -3,9 +3,24 @@ import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import styled from 'styled-components';
 import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 import { ConfirmDialog } from '../confirm-dialog';
+
+const MemoStyle = styled.div`
+    background-color: #ffffff
+    border-style: ridge
+    border-width: 0.5px;
+    :hover{
+      background-color: #e3e1e1
+    }
+    .memo__remove{
+      display: flex;
+      justify-content: flex-end
+      padding: 5px
+    }
+`
 const Memo = props => {
   const { memo, chooseMemo } = props;
   const [isShowConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -34,16 +49,17 @@ const Memo = props => {
   }
   return (
     <Fragment>
-      <div className="bg-light mb-2" onClick={handleSelect}>
+      <MemoStyle onClick={handleSelect}>
         <Card.Body>
           <Card.Title>{memo.title}</Card.Title>
           <Card.Text>
             {memo.content}
           </Card.Text>
         </Card.Body>
-
-      </div>
-      <i className="fa fa-trash" aria-hidden="true" key="removeMemo" onClick={() => handleShowConfirmDialog()}></i>
+        <div className="memo__remove">
+          <i className="fa fa-trash" aria-hidden="true" key="removeMemo" onClick={() => handleShowConfirmDialog()}></i>
+        </div>
+      </MemoStyle>
       <ConfirmDialog title="Confirm Dialog"
         description="Are you want to delete this memo?"
         isShow={isShowConfirmDialog}

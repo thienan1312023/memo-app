@@ -1,10 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux'
+import styled from 'styled-components';
 import MemoList from '../memo-list'
 import { MemoDetail } from '../memo-detail'
 import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
+
+// const overflowMemo = {
+//   overflowY: 'hidden',
+//   display: 'block',
+//   height: '100%',
+//   flexWrap: 'wrap'
+// }
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
@@ -19,41 +27,43 @@ class MainBody extends React.Component {
       this.props.fetchMemos(false);
     }
   }
+  i
 
-
-fetchMemos = () => {
-  const url = API_BASE_MEMO;
-  axios({
-    url: url,
-    method: 'GET'
-  })
-    .then(
-      res => {
-        if (res.status === 200) {
-          this.setState({
-            data: res.data,
-            isLoading: false
-          })
+  fetchMemos = () => {
+    const url = API_BASE_MEMO;
+    axios({
+      url: url,
+      method: 'GET'
+    })
+      .then(
+        res => {
+          if (res.status === 200) {
+            this.setState({
+              data: res.data,
+              isLoading: false
+            })
+          }
         }
-      }
-    )
-    .catch(function (err) {
-      console.log(err);
-    });
-}
-componentDidMount() {
-  this.fetchMemos();
-}
+      )
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
+  componentDidMount() {
+    this.fetchMemos();
+  }
 
-render() {
-  const { data } = this.state;
-  return data && (
-    <div className="d-flex">
-      <MemoList memos={data} />
-      <MemoDetail></MemoDetail>
-    </div>
-  );
-}
+  render() {
+    const { data } = this.state;
+    return data && (
+      <div className="d-flex row">
+        <div className="col-md-4 col-xs-12">
+             <MemoList memos={data} />
+        </div>
+        <div className="col-md-8 col-xs-12"><MemoDetail></MemoDetail> </div>
+      </div>
+    );
+  }
 }
 
 function mapState(state) {

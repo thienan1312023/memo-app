@@ -7,11 +7,9 @@ const MemoList = ( {memos}) => {
     <div>
         {
           memos.length > 0 && memos.map(memo => (
-          <div  key={memo._id} timeout={300}>
+          <div key={memo._id}>
             <Memo
               memo={memo}
-              // onUpdate={updateMemo}
-              // onDelete={deleteMemo}
             />
           </div>
         ))}
@@ -19,11 +17,8 @@ const MemoList = ( {memos}) => {
   )
 }
 
-//MemoList.propTypes = {
-  //memos: PropTypes.arrayOf(PropTypes.object).isRequired,
-  //onScroll: PropTypes.func.isRequired,
-  // updateMemo: PropTypes.func.isRequired,
-  // deleteMemo: PropTypes.func.isRequired,
-//}
+MemoList.propTypes = {
+  memos: PropTypes.arrayOf(PropTypes.object).isRequired,
+}
 
 export default MemoList
