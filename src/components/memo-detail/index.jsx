@@ -3,27 +3,39 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import axios from 'axios'
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 import { memoActions } from '../../actions/memo.actions';
 import { API_BASE } from '../../constants/api.constants';
 
 const MemoStyle = styled.div`
     display: flex;
     flex-direction: column;
-    width: 99%;
     .memo__title{
         line-height: 130%;
         padding: 10px;
     }
     .memo__content{
-        height: 71vh;
+        height: 73vh;
+        resize: none;
+        padding: 10px;
     }
+    .memo__container-submit{
+        .memo__submit{
+            width: 15%;
+        }
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 10px;
+        padding-top: 10px;
+    }
+    
 `;
 class MemoDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             memo: {
-                id:'',
+                id: '',
                 title: '',
                 content: '',
                 color: ''
@@ -38,10 +50,10 @@ class MemoDetail extends React.Component {
             .then(res => {
                 console.log(res);
                 this.props.fetchMemos(true);
-        }).catch((error) => {
-            console.log(error);
-        });
-        
+            }).catch((error) => {
+                console.log(error);
+            });
+
     }
 
     handleChange = (event) => {
@@ -62,7 +74,7 @@ class MemoDetail extends React.Component {
         if (nextProps !== this.props) {
             this.setState({
                 memo: {
-                    id : memoSelected.id,
+                    id: memoSelected.id,
                     title: memoSelected.title,
                     content: memoSelected.content,
                     color: memoSelected.color
@@ -78,20 +90,26 @@ class MemoDetail extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <MemoStyle>
-                <input  className="memo__title"
-                        type="text" 
-                        name="title" 
+                    <input className="memo__title"
+                        type="text"
+                        name="title"
                         placeholder="Title"
-                        value={this.state.memo.title || ''} 
+                        value={this.state.memo.title || ''}
                         onChange={this.handleChange} />
-                <textarea className ="memo__content"
-                        type="text" 
-                        name="content" 
-                        value={this.state.memo.content || ''} 
+                    <textarea className="memo__content"
+                        type="text"
+                        name="content"
+                        value={this.state.memo.content || ''}
                         placeholder="Write your memo ... "
                         onChange={this.handleChange} />
+                    <div className="memo__container-submit">
+                        <Button variant="contained"
+                            color="primary"
+                            className="memo__submit"
+                            onClick={this.handleSubmit}>Save</Button>
+                    </div>
                 </MemoStyle>
-                <input type="submit" value="Submit" />
+
             </form>
         )
     }

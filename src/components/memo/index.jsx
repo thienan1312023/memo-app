@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import styled from 'styled-components';
+import moment from 'moment';
 import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 import { ConfirmDialog } from '../confirm-dialog';
@@ -17,12 +18,13 @@ const MemoStyle = styled.div`
     }
     .memo__remove{
       display: flex;
-      justify-content: flex-end
-      padding: 5px
+      justify-content: space-between
+      padding: 0 25px 10px 20px;
     }
 `
 const Memo = props => {
   const { memo, chooseMemo } = props;
+  memo.date = moment(memo.date).format('MMMM Do YYYY');
   const [isShowConfirmDialog, setShowConfirmDialog] = useState(false);
   const handleSelect = () => {
     const memoColor = memo.color || '';
@@ -58,6 +60,7 @@ const Memo = props => {
         </Card.Body>
         <div className="memo__remove">
           <i className="fa fa-trash" aria-hidden="true" key="removeMemo" onClick={() => handleShowConfirmDialog()}></i>
+          <span>{memo.date}</span>
         </div>
       </MemoStyle>
       <ConfirmDialog title="Confirm Dialog"

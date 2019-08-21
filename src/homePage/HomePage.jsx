@@ -10,19 +10,20 @@ const RootHomepage = styled.div`
     width: 100%;
     .RootHomepage__header{
         height: 15vh;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background: linear-gradient(to right, #243B55, #141E30);
+        .RootHomepage__header__greeting, .RootHomepage__header__intro {
+            font-size: 30px;    
+            font-family: cursive;
+            color: white
+        }
     }
     .RootHomepage__body{
         height: 85vh;
     }
 `;
-const toolbarProps = {
-    // statusFilter,
-    // todos,
-    // onStatusFilterChange: handleStatusFilterChange,
-    //scrolled,
-    // onCompleteAll: handleCompleteAll,
-    // onDeleteAll: handleDeleteAll,
-}
 class HomePage extends React.Component {
     handleDeleteUser(id) {
         return (e) => this.props.deleteUser(id);
@@ -35,8 +36,8 @@ class HomePage extends React.Component {
             <RootHomepage>
                 <div className="RootHomepage__header">
                     <div>
-                        <h1>Hi {user.userName}!</h1>
-                        <p>You're logged in with React!!</p>
+                        <h1 className="RootHomepage__header__greeting">Hi {user.userName}!</h1>
+                        <span className="RootHomepage__header__intro">Your memos is here !!!</span>
                     </div>
                     <div>
                         <Link to="/login">Logout</Link>
