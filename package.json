@@ -8,8 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open",
-    "heroku-postbuild": "webpack -p"
+    "start": "webpack-dev-server --open"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.15.1",
