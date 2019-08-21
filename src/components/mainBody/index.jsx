@@ -82,6 +82,9 @@ class MainBody extends React.Component {
     this.fetchMemos();
   }
 
+  handleCreateMemo = () => {
+    this.props.createMemo(true);
+  }
   render() {
     const { data } = this.state;
     return data && (
@@ -90,7 +93,7 @@ class MainBody extends React.Component {
         <div className="col-lg-4 col-12 p-0">
             <div className = "main-body__title-list-item">
                <span className="title"> All memos ({data.length}) </span>
-               <i className="fa fa-plus-square" aria-hidden="true"></i>
+               <i className="fa fa-plus-square" onClick={this.handleCreateMemo} aria-hidden="true"></i>
             </div>
              <MemoList memos={data} />
         </div>
@@ -105,7 +108,8 @@ function mapState(state) {
 }
 
 const actionCreators = {
-  fetchMemos: memoActions.fetchMemos
+  fetchMemos: memoActions.fetchMemos,
+  createMemo: memoActions.createMemo
 }
 
 const connectedMainBody = connect(mapState, actionCreators)(MainBody);

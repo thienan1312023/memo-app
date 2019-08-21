@@ -21,7 +21,7 @@ export default function (state = initialStates, action) {
     case memoConstants.CREATE_MEMO:
     return {
       ...state, 
-      isReLoadData: action.payload
+      isCreateMemo: action.payload
     }
     default:
       return state;

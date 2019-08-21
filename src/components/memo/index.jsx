@@ -30,55 +30,60 @@ const MemoStyle = styled.div`
     }
 `
 const Memo = props => {
-  const { memo, chooseMemo } = props;
-  memo.date = moment(memo.date).format('MMMM Do YYYY');
-  const [isShowConfirmDialog, setShowConfirmDialog] = useState(false);
-  const handleSelect = () => {
-    const memoColor = memo.color || '';
-    chooseMemo(memo._id, memo.title, memo.content, memoColor);
+  const { memo, chooseMemo, createMemo } = props;
+  //memo.date = moment(memo.date).format('MMMM Do YYYY');
+  const isValid = moment(memo.date, 'MMMM Do YYYY', true).isValid();
+  if (!isValid){
+    memo.date = moment(memo.date).format('MMMM Do YYYY')
   }
+const [isShowConfirmDialog, setShowConfirmDialog] = useState(false);
+const handleSelect = () => {
+  const memoColor = memo.color || '';
+  chooseMemo(memo._id, memo.title, memo.content, memoColor);
+  createMemo(false);
+}
 
-  const handleShowConfirmDialog = () => {
-    setShowConfirmDialog(true);
-  }
+const handleShowConfirmDialog = () => {
+  setShowConfirmDialog(true);
+}
 
-  const handleApproveRemove = () => {
-    setShowConfirmDialog(false);
-    axios.delete(`${API_BASE_MEMO}${memo._id}/delete`, { ...memo })
-      .then(res => {
-        console.log(res);
-        props.fetchMemos(true);
-      }).catch((error) => {
-        console.log(error);
-      });
-  }
+const handleApproveRemove = () => {
+  setShowConfirmDialog(false);
+  axios.delete(`${API_BASE_MEMO}${memo._id}/delete`, { ...memo })
+    .then(res => {
+      console.log(res);
+      props.fetchMemos(true);
+    }).catch((error) => {
+      console.log(error);
+    });
+}
 
-  const handleCancelRemove = () => {
-    setShowConfirmDialog(false);
-  }
-  return (
-    <Fragment>
-      <MemoStyle onClick={handleSelect}>
-        <Card.Body>
-          <Card.Title>{memo.title}</Card.Title>
-          <Card.Text>
-            {memo.content}
-          </Card.Text>
-        </Card.Body>
-        <div className="memo__remove">
-          <i className="fa fa-trash" aria-hidden="true" key="removeMemo" onClick={() => handleShowConfirmDialog()}></i>
-          <span>{memo.date}</span>
-        </div>
-      </MemoStyle>
-      <ConfirmDialog title="Confirm Dialog"
-        description="Are you want to delete this memo?"
-        isShow={isShowConfirmDialog}
-        handleApprove={handleApproveRemove}
-        handleClose={handleCancelRemove}
-      >
-      </ConfirmDialog>
-    </Fragment>
-  )
+const handleCancelRemove = () => {
+  setShowConfirmDialog(false);
+}
+return (
+  <Fragment>
+    <MemoStyle onClick={handleSelect}>
+      <Card.Body>
+        <Card.Title>{memo.title}</Card.Title>
+        <Card.Text>
+          {memo.content}
+        </Card.Text>
+      </Card.Body>
+      <div className="memo__remove">
+        <i className="fa fa-trash" aria-hidden="true" key="removeMemo" onClick={() => handleShowConfirmDialog()}></i>
+        <span>{memo.date}</span>
+      </div>
+    </MemoStyle>
+    <ConfirmDialog title="Confirm Dialog"
+      description="Are you want to delete this memo?"
+      isShow={isShowConfirmDialog}
+      handleApprove={handleApproveRemove}
+      handleClose={handleCancelRemove}
+    >
+    </ConfirmDialog>
+  </Fragment>
+)
 
 }
 
@@ -97,7 +102,8 @@ function mapState(state) {
 
 const actionCreators = {
   chooseMemo: memoActions.chooseMemo,
-  fetchMemos: memoActions.fetchMemos
+  fetchMemos: memoActions.fetchMemos,
+  createMemo: memoActions.createMemo
 }
 
 const connectedMemo = connect(mapState, actionCreators)(Memo);

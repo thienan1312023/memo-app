@@ -15,6 +15,6 @@ function fetchMemos(isReLoadData){
     return {type: memoConstants.FETCH_MEMOS, payload: isReLoadData};    
 }
 
-function createMemo(){
-    return {type: memoConstants.CREATE_MEMO}
+function createMemo(isCreateMemo){
+    return {type: memoConstants.CREATE_MEMO, payload: isCreateMemo}
 }
