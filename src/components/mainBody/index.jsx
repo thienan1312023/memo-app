@@ -88,7 +88,7 @@ class MainBody extends React.Component {
   render() {
     const { data } = this.state;
     return data && (
-      <MainBodyStyle className="row" style={overflowMemo}>
+      <MainBodyStyle className="row h-100" style={overflowMemo}>
         <div className="col-lg-8 col-12 pr-0"><MemoDetail></MemoDetail> </div>
         <div className="col-lg-4 col-12 p-0">
             <div className = "main-body__title-list-item">

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import styled from 'styled-components';
 import moment from 'moment';
+import reactCSS from 'reactcss'
 import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 import { ConfirmDialog } from '../confirm-dialog';
@@ -32,6 +33,26 @@ const MemoStyle = styled.div`
 const Memo = props => {
   const { memo, chooseMemo, createMemo } = props;
   //memo.date = moment(memo.date).format('MMMM Do YYYY');
+  const MemoStyle = styled.div`
+  border-width: 15px 0px 0px 0px;
+  border-color: ${memo.color};
+  border-style: ridge;
+  :hover{
+    background-color: #e3e1e1
+  }
+  .memo__remove{
+    display: flex;
+    justify-content: space-between
+    padding: 0 25px 10px 20px;
+    i.fa-trash{
+      :hover{
+        color: red
+      }
+      color: #f87249;
+    }
+
+  }
+`
   const isValid = moment(memo.date, 'MMMM Do YYYY', true).isValid();
   if (!isValid){
     memo.date = moment(memo.date).format('MMMM Do YYYY')

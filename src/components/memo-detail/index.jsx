@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import axios from 'axios'
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import reactCSS from 'reactcss'
+import { SketchPicker } from 'react-color'
 import { memoActions } from '../../actions/memo.actions';
 import { API_BASE_MEMO } from '../../constants/api.constants';
 
@@ -16,7 +18,7 @@ const MemoStyle = styled.div`
         padding: 10px;
     }
     .memo__content{
-        height: calc(100% - 126px);;
+        height: calc(100% - 156px);;
         resize: none;
         padding: 10px;
     }
@@ -41,7 +43,14 @@ class MemoDetail extends React.Component {
                 content: '',
                 color: ''
             },
-            isCreateMemo: true
+            isCreateMemo: true,
+            displayColorPicker: false,
+            color: {
+                r: '241',
+                g: '112',
+                b: '19',
+                a: '1',
+            },
         }
     }
     handleSubmit = () => {
@@ -58,7 +67,7 @@ class MemoDetail extends React.Component {
         } else {
             let user = JSON.parse(localStorage.getItem('user'));
             memo.userName = user.userName;
-            memo.color = 'yellow';
+            memo.color = `rgba(${this.state.color.r}, ${this.state.color.g}, ${this.state.color.b}, ${this.state.color.a})`;
             axios.post(`${API_BASE_MEMO}create`, { ...memo })
                 .then(res => {
                     this.props.fetchMemos(true);
@@ -79,9 +88,19 @@ class MemoDetail extends React.Component {
             }
         });
     }
-    componentDidMount() {
 
-    }
+    handleClick = () => {
+        this.setState({ displayColorPicker: !this.state.displayColorPicker })
+    };
+
+    handleClose = () => {
+        this.setState({ displayColorPicker: false })
+    };
+
+    handleChangeColor = (color) => {
+        this.setState({ color: color.rgb })
+    };
+
     componentWillReceiveProps(nextProps) {
         const { memoSelected, isCreateMemo } = nextProps;
         if (nextProps !== this.props) {
@@ -113,6 +132,37 @@ class MemoDetail extends React.Component {
 
     }
     render() {
+        const styles = reactCSS({
+            'default': {
+                color: {
+                    width: '40px',
+                    height: '30px',
+                    background: 'rgb(241, 112, 19)',
+                    marginLeft: '15px',
+                    borderRadius: '50%',
+                    background: `rgba(${this.state.color.r}, ${this.state.color.g}, ${this.state.color.b}, ${this.state.color.a})`,
+                },
+                popover: {
+                    position: 'absolute',
+                    zIndex: '2',
+                },
+                cover: {
+                    position: 'fixed',
+                    top: '0px',
+                    right: '0px',
+                    bottom: '0px',
+                    left: '0px',
+                },
+                container: {
+                    paddingLeft: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    alignContent: 'center',
+                    height: '35px',
+                    color: '#777070'
+                }
+            },
+        });
         const { isCreateMemo } = this.state;
         return (
             <form className="h-100" onSubmit={this.handleSubmit}>
@@ -123,6 +173,15 @@ class MemoDetail extends React.Component {
                         placeholder="Title"
                         value={this.state.memo.title || ''}
                         onChange={this.handleChange} />
+                    <div style={styles.container}>
+                        Color : 
+                            <div onClick={this.handleClick} style={styles.color} />
+                        {this.state.displayColorPicker ? <div style={styles.popover}>
+                            <div style={styles.cover} onClick={this.handleClose} />
+                            <SketchPicker color={this.state.color} onChange={this.handleChangeColor} />
+                        </div> : null}
+
+                    </div>
                     <textarea className="memo__content"
                         type="text"
                         name="content"
