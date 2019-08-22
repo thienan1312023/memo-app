@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import reactCSS from 'reactcss'
 import { SketchPicker } from 'react-color'
+import { RGBToHex } from '../../helpers/convertColor'
 import { memoActions } from '../../actions/memo.actions';
 import { API_BASE_MEMO } from '../../constants/api.constants';
 
@@ -27,6 +28,9 @@ const MemoStyle = styled.div`
         justify-content: flex-end;
         padding-right: 25px;
         padding-top: 10px;
+        .memo__update{
+        background-color: #4CAF50;
+        }
     }
     
 `;
@@ -54,6 +58,7 @@ class MemoDetail extends React.Component {
         event.preventDefault();
         const { memo } = this.state;
         memo.date = Date.now();
+        memo.color = `rgba(${this.state.color.r}, ${this.state.color.g}, ${this.state.color.b}, ${this.state.color.a})`;
         if (memo.id && memo.id !== "") {
             axios.put(
                 `${API_BASE_MEMO}${memo.id}/update`,
@@ -72,7 +77,6 @@ class MemoDetail extends React.Component {
         } else {
             let user = JSON.parse(localStorage.getItem('userMemo'));
             memo.userName = user.userName;
-            memo.color = `rgba(${this.state.color.r}, ${this.state.color.g}, ${this.state.color.b}, ${this.state.color.a})`;
             axios.post(`${API_BASE_MEMO}create`, { ...memo })
                 .then(res => {
                     this.props.fetchMemos(true);
@@ -120,13 +124,14 @@ class MemoDetail extends React.Component {
                     isCreateMemo: isCreateMemo
                 });
             } else {
+                const color = RGBToHex(memoSelected.color)
                 this.setState({
                     memo: {
                         id: memoSelected.id,
                         title: memoSelected.title,
                         content: memoSelected.content,
-                        color: memoSelected.color
                     },
+                    color: {...color},
                     isCreateMemo: isCreateMemo
 
                 });
@@ -194,10 +199,13 @@ class MemoDetail extends React.Component {
                         placeholder="Write your new memo ... "
                         onChange={this.handleChange} />
                     <div className="memo__container-submit">
-                        <Button variant="contained"
+                        {isCreateMemo && <Button variant="contained"
                             color="primary"
-                            className="memo__submit"
-                            onClick={this.handleSubmit}>{isCreateMemo ? 'Add New' : 'Update'}</Button>
+                            onClick={this.handleSubmit}>ADD NEW</Button>}
+                        {!isCreateMemo && <Button variant="contained"
+                            color="primary"
+                            className="memo__update"
+                            onClick={this.handleSubmit}>UPDATE</Button>}
                     </div>
                 </MemoStyle>
 

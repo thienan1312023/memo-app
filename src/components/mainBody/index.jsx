@@ -24,10 +24,10 @@ const MainBodyStyle = styled.div`
         color: brown
       }
       .fa-plus-square{
-        color: #1ebf1e;
+        color: #3b78e6;
         font-size: 35px;
         :hover{
-          color: #209c20;
+          color: #114ebd;
         }
       }
   }
