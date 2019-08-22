@@ -20,6 +20,7 @@ function login(userName, password) {
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('userMemo');
+    localStorage.removeItem('tokenMemo');
 }
 
 
