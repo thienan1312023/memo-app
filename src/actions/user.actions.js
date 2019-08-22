@@ -52,7 +52,12 @@ function register(user) {
                 },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    if(error.response.status === 409){
+                        dispatch(alertActions.error('User name already exists on the system'));
+                    }else{
+                        dispatch(alertActions.error(error.toString()));
+                    }
+                    
                 }
             );
     };

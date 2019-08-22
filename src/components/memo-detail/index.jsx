@@ -53,6 +53,7 @@ class MemoDetail extends React.Component {
     handleSubmit = () => {
         event.preventDefault();
         const { memo } = this.state;
+        memo.date = Date.now();
         if (memo.id && memo.id !== "") {
             axios.put(
                 `${API_BASE_MEMO}${memo.id}/update`,
