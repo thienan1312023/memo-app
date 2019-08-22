@@ -16,8 +16,9 @@ function login(userName, password) {
         userService.login(userName, password)
             .then(
                 res => { 
+                    localStorage.setItem('tokenMemo', res.data.token);
                     let user = parseJwt(res.data.token)
-                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('userMemo', JSON.stringify(user));
                     dispatch(success(user));
                     history.push('/');
                 },

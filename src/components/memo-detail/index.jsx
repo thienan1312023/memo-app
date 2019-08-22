@@ -57,7 +57,14 @@ class MemoDetail extends React.Component {
         event.preventDefault();
         const { memo } = this.state;
         if (memo.id && memo.id !== "") {
-            axios.put(`${API_BASE_MEMO}${memo.id}/update`, { ...memo })
+            axios.put(
+                `${API_BASE_MEMO}${memo.id}/update`,
+                { ...memo },
+                {
+                    headers: {
+                        Authorization: localStorage.getItem('tokenMemo') || ''
+                    }
+                })
                 .then(res => {
                     console.log(res);
                     this.props.fetchMemos(true);
@@ -65,7 +72,7 @@ class MemoDetail extends React.Component {
                     console.log(error);
                 });
         } else {
-            let user = JSON.parse(localStorage.getItem('user'));
+            let user = JSON.parse(localStorage.getItem('userMemo'));
             memo.userName = user.userName;
             memo.color = `rgba(${this.state.color.r}, ${this.state.color.g}, ${this.state.color.b}, ${this.state.color.a})`;
             axios.post(`${API_BASE_MEMO}create`, { ...memo })
@@ -174,7 +181,7 @@ class MemoDetail extends React.Component {
                         value={this.state.memo.title || ''}
                         onChange={this.handleChange} />
                     <div style={styles.container}>
-                        Color : 
+                        Color :
                             <div onClick={this.handleClick} style={styles.color} />
                         {this.state.displayColorPicker ? <div style={styles.popover}>
                             <div style={styles.cover} onClick={this.handleClose} />

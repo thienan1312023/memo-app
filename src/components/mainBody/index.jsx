@@ -62,7 +62,10 @@ class MainBody extends React.Component {
     const url = API_BASE_MEMO;
     axios({
       url: url,
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        Authorization: localStorage.getItem('tokenMemo') || ''
+      }
     })
       .then(
         res => {
