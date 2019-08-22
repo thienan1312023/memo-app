@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
 
+
+const helpBlock = {
+    color: 'red',
+    fontSize: '14px'
+}
 class RegisterPage extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +16,8 @@ class RegisterPage extends React.Component {
         this.state = {
             user: {
                 userName: '',
-                password: ''
+                password: '',
+                rePassword: ''
             },
             submitted: false
         };
@@ -36,38 +42,51 @@ class RegisterPage extends React.Component {
 
         this.setState({ submitted: true });
         const { user } = this.state;
-        if (user.userName && user.password) {
+        if (user.userName && user.password && user.password === user.rePassword) {
             this.props.register(user);
         }
     }
 
     render() {
-        const { registering  } = this.props;
+        const { registering } = this.props;
         const { user, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Register</h2>
+            <div className="col-md-6 col-md-offset-3 bg-white m-5 ">
+                <h2 className="text-center">Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !user.userName ? ' has-error' : '')}>
-                        <label htmlFor="userName">userName</label>
+                        <label htmlFor="userName">User Name</label>
                         <input type="text" className="form-control" name="userName" value={user.userName} onChange={this.handleChange} />
                         {submitted && !user.userName &&
-                            <div className="help-block">userName is required</div>
+                            <div style={helpBlock}>UserName is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
                         <label htmlFor="password">Password</label>
                         <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
                         {submitted && !user.password &&
-                            <div className="help-block">Password is required</div>
+                            <div style={helpBlock}>Password is required</div>
                         }
                     </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Register</button>
-                        {registering && 
+
+                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
+                        <label htmlFor="password">Confirm Password</label>
+                        <input type="password" className="form-control" name="rePassword" value={user.rePassword} onChange={this.handleChange} />
+                        {submitted && user.password && user.rePassword && (user.rePassword !== user.password) &&
+                            <div style={helpBlock}>Confirm password does not match with password</div>
+                        }
+
+                        {submitted && !user.rePassword &&
+                            <div style={helpBlock}>Confirm Password is required</div>
+                        }
+                    </div>
+
+                    <div className="form-group d-flex justify-content-center">
+                        <button className="btn btn-primary w-100">Register</button>
+                        {registering &&
                             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                         }
-                        <Link to="/login" className="btn btn-link">Cancel</Link>
+                        <Link to="/login" className="btn btn-link w-100">Cancel</Link>
                     </div>
                 </form>
             </div>

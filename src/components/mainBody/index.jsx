@@ -1,17 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux'
 import styled from 'styled-components';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import MemoList from '../memo-list'
 import { MemoDetail } from '../memo-detail'
 import { API_BASE_MEMO } from '../../constants/api.constants';
 import { memoActions } from '../../actions/memo.actions';
 
 const MainBodyStyle = styled.div`
-  @media (max-width: 768px) {
-      display: flex
-      flex-direction: column
-  }
   .main-body__title-list-item{
     height: 44px
     textTransform: uppercase
@@ -38,16 +36,19 @@ const MainBodyStyle = styled.div`
 const overflowMemo = {
   backgroundColor: 'white'
 }
-
-const titleListMemo = {
-
-}
+const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: white;
+    background-color: white;
+`;
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       data: null,
+      loading: true
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -72,7 +73,7 @@ class MainBody extends React.Component {
           if (res.status === 200) {
             this.setState({
               data: res.data,
-              isLoading: false
+              loading: false
             })
           }
         }
@@ -90,19 +91,35 @@ class MainBody extends React.Component {
   }
   render() {
     const { data } = this.state;
-    return data && (
-      <MainBodyStyle className="row h-100" style={overflowMemo}>
-        <div className="col-lg-8 col-12 pr-0"><MemoDetail></MemoDetail> </div>
-        <div className="col-lg-4 col-12 p-0">
-            <div className = "main-body__title-list-item">
-               <span className="title"> All memos ({data.length}) </span>
-               <i className="fa fa-plus-square" onClick={this.handleCreateMemo} aria-hidden="true"></i>
+    return (
+      <Fragment>
+        {
+          data && 
+          <MainBodyStyle className="row h-100" style={overflowMemo}>
+            <div className="col-lg-8 col-12 pr-0"><MemoDetail></MemoDetail> </div>
+            <div className="col-lg-4 col-12 p-0">
+              <div className="main-body__title-list-item">
+                <span className="title"> All memos ({data.length}) </span>
+                <i className="fa fa-plus-square" onClick={this.handleCreateMemo} aria-hidden="true"></i>
+              </div>
+              <MemoList memos={data} />
             </div>
-             <MemoList memos={data} />
-        </div>
-      </MainBodyStyle>
+          </MainBodyStyle>
+        }
+
+          <div className='sweet-loading'>
+            <ClipLoader
+              css={override}
+              sizeUnit={"px"}
+              size={150}
+              color={'#123abc'}
+              loading={this.state.loading}
+            />
+          </div>  
+  
+    </Fragment>
     );
-  }
+}
 }
 
 function mapState(state) {

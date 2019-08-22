@@ -23,9 +23,6 @@ const MemoStyle = styled.div`
         padding: 10px;
     }
     .memo__container-submit{
-        .memo__submit{
-            width: 15%;
-        }
         display: flex;
         justify-content: flex-end;
         padding-right: 25px;

@@ -19,6 +19,9 @@ const RootHomepage = styled.div`
             font-family: cursive;
             color: white
         }
+        .RootHomepage__header__logout{
+            color: white
+        }
     }
     .RootHomepage__body{
         height: calc(100vh - 120px);
@@ -40,7 +43,7 @@ class HomePage extends React.Component {
                         <span className="RootHomepage__header__intro">Your memos is here !!!</span>
                     </div>
                     <div>
-                        <Link to="/login">Logout</Link>
+                        <Link to="/login"><span className="RootHomepage__header__logout">Logout</span></Link>
                     </div>
                 </div>
                 <div className="RootHomepage__body">
