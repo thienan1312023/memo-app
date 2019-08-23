@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
@@ -121,6 +122,10 @@ class MainBody extends React.Component {
     );
 }
 }
+
+MainBody.propTypes = {
+  isReLoadData: PropTypes.bool
+};
 
 function mapState(state) {
   const isReLoadData = state.memo.isReLoadData;

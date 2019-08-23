@@ -47,9 +47,9 @@ class MemoDetail extends React.Component {
             isCreateMemo: true,
             displayColorPicker: false,
             color: {
-                r: '241',
-                g: '112',
-                b: '19',
+                r: '184',
+                g: '233',
+                b: '134',
                 a: '1',
             },
         }
@@ -215,7 +215,10 @@ class MemoDetail extends React.Component {
 
 }
 
-
+MemoDetail.propTypes = {
+    memoSelected: PropTypes.object,
+    isCreateMemo: PropTypes.bool
+};
 function mapState(state) {
     const memoSelected = state.memo.memoSelected;
     const isCreateMemo = state.memo.isCreateMemo;
